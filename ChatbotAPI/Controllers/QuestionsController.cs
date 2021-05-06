@@ -37,6 +37,13 @@ namespace ChatbotAPI.Controllers {
             return question;
         }
 
+        [HttpGet("byCategoryId/{categoryId}")]
+        public async Task<ActionResult<IEnumerable<Question>>> GetQuestionsByCategoryId(int categoryId) {
+            var questions = await _context.Question.Where(question => question.CategoryId == categoryId).ToListAsync();
+            if (questions == null) return NotFound();
+            return questions;
+        }
+
         // PUT: api/Questions/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutQuestion(int id, Question question) {

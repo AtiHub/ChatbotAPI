@@ -24,6 +24,8 @@ namespace ChatbotAPI.Controllers {
             int num = _random.Next(196) + 1;
             var answer = await _context.Answer.FindAsync(num);
 
+            System.Diagnostics.Debug.WriteLine(questionText.Text + "");
+
             if (answer == null) {
                 return NotFound();
             }
