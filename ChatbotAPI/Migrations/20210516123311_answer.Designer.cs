@@ -2,14 +2,16 @@
 using ChatbotAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ChatbotAPI.Migrations
 {
     [DbContext(typeof(ChatbotAPIContext))]
-    partial class ChatbotAPIContextModelSnapshot : ModelSnapshot
+    [Migration("20210516123311_answer")]
+    partial class answer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,8 +26,8 @@ namespace ChatbotAPI.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Text")
-                        .HasMaxLength(3000)
-                        .HasColumnType("longtext CHARACTER SET utf8mb4")
+                        .HasMaxLength(1000)
+                        .HasColumnType("varchar(1000) CHARACTER SET utf8mb4")
                         .HasColumnName("text");
 
                     b.HasKey("Id");
@@ -93,11 +95,17 @@ namespace ChatbotAPI.Migrations
                         .HasColumnType("int")
                         .HasColumnName("id");
 
+                    b.Property<int>("AnswerId")
+                        .HasColumnType("int")
+                        .HasColumnName("answerId");
+
                     b.Property<int>("QuestionId")
                         .HasColumnType("int")
                         .HasColumnName("questionId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AnswerId");
 
                     b.HasIndex("QuestionId");
 
@@ -135,11 +143,19 @@ namespace ChatbotAPI.Migrations
 
             modelBuilder.Entity("ChatbotAPI.Models.FAQ", b =>
                 {
+                    b.HasOne("ChatbotAPI.Models.Answer", "Answer")
+                        .WithMany()
+                        .HasForeignKey("AnswerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ChatbotAPI.Models.Question", "Question")
                         .WithMany()
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Answer");
 
                     b.Navigation("Question");
                 });

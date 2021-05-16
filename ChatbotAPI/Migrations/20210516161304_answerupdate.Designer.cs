@@ -2,14 +2,16 @@
 using ChatbotAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ChatbotAPI.Migrations
 {
     [DbContext(typeof(ChatbotAPIContext))]
-    partial class ChatbotAPIContextModelSnapshot : ModelSnapshot
+    [Migration("20210516161304_answerupdate")]
+    partial class answerupdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

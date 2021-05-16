@@ -2,14 +2,16 @@
 using ChatbotAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ChatbotAPI.Migrations
 {
     [DbContext(typeof(ChatbotAPIContext))]
-    partial class ChatbotAPIContextModelSnapshot : ModelSnapshot
+    [Migration("20210516124901_faqupdate")]
+    partial class faqupdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,8 +26,8 @@ namespace ChatbotAPI.Migrations
                         .HasColumnName("id");
 
                     b.Property<string>("Text")
-                        .HasMaxLength(3000)
-                        .HasColumnType("longtext CHARACTER SET utf8mb4")
+                        .HasMaxLength(1000)
+                        .HasColumnType("varchar(1000) CHARACTER SET utf8mb4")
                         .HasColumnName("text");
 
                     b.HasKey("Id");

@@ -16,5 +16,9 @@ namespace ChatbotAPI.Data {
         public DbSet<ChatbotAPI.Models.Answer> Answer { get; set; }
 
         public DbSet<ChatbotAPI.Models.Category> Category { get; set; }
+
+        public DbSet<ChatbotAPI.Models.FAQ> FAQ { get; set; }
+
+        public DbSet<ChatbotAPI.Models.AskUs> AskUs { get; set; }
     }
 }

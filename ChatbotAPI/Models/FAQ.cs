@@ -6,14 +6,15 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace ChatbotAPI.Models {
-    [Table("answer")]
-    public class Answer {
+    [Table("faq")]
+    public class FAQ {
         [Key]
         [Column("id")]
         public int Id { get; set; }
 
-        [Column("text")]
-        [StringLength(3000)]
-        public string Text { get; set; }
+        [Column("questionId")]
+        [ForeignKey("Question")]
+        public int QuestionId { get; set; }
+        public Question Question { get; set; }
     }
 }
