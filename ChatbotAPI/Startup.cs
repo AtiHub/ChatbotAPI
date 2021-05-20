@@ -1,4 +1,5 @@
 using ChatbotAPI.Data;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ChatbotAPI.Helpers;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using ChatbotAPI.Services;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ChatbotAPI {
     public class Startup {
@@ -33,6 +40,13 @@ namespace ChatbotAPI {
 
             string mySqlConnectionStr = Configuration.GetConnectionString("MySQLConnectionString");
             services.AddDbContextPool<ChatbotAPIContext>(options => options.UseMySql(mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr)));
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+
+            // configure DI for application services
+            services.AddScoped<IUserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,8 +55,10 @@ namespace ChatbotAPI {
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseRouting();
+            app.UseMiddleware<JwtMiddleware>();
 
+            app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseCors("AllowAll");

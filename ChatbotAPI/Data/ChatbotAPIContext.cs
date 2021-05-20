@@ -20,5 +20,7 @@ namespace ChatbotAPI.Data {
         public DbSet<ChatbotAPI.Models.FAQ> FAQ { get; set; }
 
         public DbSet<ChatbotAPI.Models.AskUs> AskUs { get; set; }
+
+        public DbSet<ChatbotAPI.Models.User> User { get; set; }
     }
 }
