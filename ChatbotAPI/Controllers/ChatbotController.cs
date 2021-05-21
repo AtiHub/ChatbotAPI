@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AuthorizeAttribute = ChatbotAPI.Helpers.AuthorizeAttribute;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ChatbotAPI.Controllers {
     [Route("api/[controller]")]
@@ -17,6 +19,7 @@ namespace ChatbotAPI.Controllers {
             _context = context;
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult<Answer>> AskQuestion(QuestionText questionText) {
             //TODO: QUESTION WILL RUN THROUGH THE CHATBOT HERE; FOR NOW, RANDOM ANSWER WILL BE GIVEN

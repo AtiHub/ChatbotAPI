@@ -67,7 +67,7 @@ namespace ChatbotAPI.Controllers {
             });
         }
 
-        [Authorize(Role = "Admin")]
+        [Authorize(new string[] { "Admin" })]
         [HttpPost("register")]
         public IActionResult Register([FromBody] RegisterModel model) {
             // map model to entity
@@ -84,7 +84,7 @@ namespace ChatbotAPI.Controllers {
             }
         }
 
-        [Authorize(Role = "Admin")]
+        [Authorize(new string[] { "Admin" })]
         [HttpGet]
         public IActionResult GetAll() {
             var users = _userService.GetAll();
@@ -92,7 +92,7 @@ namespace ChatbotAPI.Controllers {
             return Ok(model);
         }
 
-        [Authorize(Role = "Admin")]
+        [Authorize(new string[] { "Admin" })]
         [HttpGet("{id}")]
         public IActionResult GetById(int id) {
             var user = _userService.GetById(id);
@@ -117,7 +117,7 @@ namespace ChatbotAPI.Controllers {
             }
         }
 
-        [Authorize(Role = "Admin")]
+        [Authorize(new string[] { "Admin" })]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id) {
             _userService.Delete(id);

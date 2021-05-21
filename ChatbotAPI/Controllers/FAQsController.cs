@@ -7,8 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ChatbotAPI.Data;
 using ChatbotAPI.Models;
+using AuthorizeAttribute = ChatbotAPI.Helpers.AuthorizeAttribute;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ChatbotAPI.Controllers {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class FAQsController : ControllerBase {
@@ -19,6 +22,7 @@ namespace ChatbotAPI.Controllers {
         }
 
         // GET: api/FAQs
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<FAQ>>> GetFAQ() {
             /*
@@ -34,6 +38,7 @@ namespace ChatbotAPI.Controllers {
         }
 
         // GET: api/FAQs/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<FAQ>> GetFAQ(int id) {
             var fAQ = await _context.FAQ.FindAsync(id);
@@ -48,6 +53,7 @@ namespace ChatbotAPI.Controllers {
         // PUT: api/FAQs/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [Authorize(new string[] { "Admin" })]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutFAQ(int id, FAQ fAQ) {
             if (id != fAQ.Id) {
@@ -74,6 +80,7 @@ namespace ChatbotAPI.Controllers {
         // POST: api/FAQs
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [Authorize(new string[] { "Admin" })]
         [HttpPost]
         public async Task<ActionResult<FAQ>> PostFAQ(FAQ fAQ) {
             _context.FAQ.Add(fAQ);
@@ -83,6 +90,7 @@ namespace ChatbotAPI.Controllers {
         }
 
         // DELETE: api/FAQs/5
+        [Authorize(new string[] { "Admin" })]
         [HttpDelete("{id}")]
         public async Task<ActionResult<FAQ>> DeleteFAQ(int id) {
             var fAQ = await _context.FAQ.FindAsync(id);

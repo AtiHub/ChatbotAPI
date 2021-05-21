@@ -7,8 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ChatbotAPI.Data;
 using ChatbotAPI.Models;
+using AuthorizeAttribute = ChatbotAPI.Helpers.AuthorizeAttribute;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ChatbotAPI.Controllers {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CategoriesController : ControllerBase {
@@ -19,12 +22,14 @@ namespace ChatbotAPI.Controllers {
         }
 
         // GET: api/Categories
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Category>>> GetCategory() {
             return await _context.Category.ToListAsync();
         }
 
         // GET: api/Categories/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<Category>> GetCategory(int id) {
             var category = await _context.Category.FindAsync(id);
@@ -37,6 +42,7 @@ namespace ChatbotAPI.Controllers {
         }
 
         // PUT: api/Categories/5
+        [Authorize(new string[] { "Admin" })]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCategory(int id, Category category) {
             if (id != category.Id) {
@@ -61,6 +67,7 @@ namespace ChatbotAPI.Controllers {
         }
 
         // POST: api/Categories
+        [Authorize(new string[] { "Admin" })]
         [HttpPost]
         public async Task<ActionResult<Category>> PostCategory(Category category) {
             _context.Category.Add(category);
@@ -70,6 +77,7 @@ namespace ChatbotAPI.Controllers {
         }
 
         // DELETE: api/Categories/5
+        [Authorize(new string[] { "Admin" })]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Category>> DeleteCategory(int id) {
             var category = await _context.Category.FindAsync(id);
