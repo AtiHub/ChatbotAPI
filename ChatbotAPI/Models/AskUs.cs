@@ -18,7 +18,7 @@ namespace ChatbotAPI.Models {
 
         [Column("firstname")]
         [StringLength(100)]
-        public string FirstName { get; set; }
+        public string Firstname { get; set; }
 
         [Column("lastname")]
         [StringLength(100)]
@@ -30,5 +30,9 @@ namespace ChatbotAPI.Models {
 
         [Column("answered")]
         public bool Answered { get; set; }
+
+        [Column("answer")]
+        [StringLength(1500)]
+        public string Answer { get; set; }
     }
 }

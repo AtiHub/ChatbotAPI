@@ -37,7 +37,7 @@ namespace ChatbotAPI.Controllers {
             message += "<h4>Ask Us</h4>";
             message += "<p>Question:</p>";
             message += "<p>" + askUs.Text + "</p>";
-            message += "<p>Sent by " + askUs.FirstName + " " + askUs.Lastname + "</p><br>";
+            message += "<p>Sent by " + askUs.Firstname + " " + askUs.Lastname + "</p><br>";
             message += "<p>Staff's Answer:</p>";
             message += "<p>" + model.Text + "</p>";
             message += "<p>Answered by " + model.AnsweredBy + "</p><br>";
@@ -45,6 +45,7 @@ namespace ChatbotAPI.Controllers {
 
             _emailService.Send(to: askUs.Email, subject: "Bilgi Staff's Answer", html: message);
             askUs.Answered = true;
+            askUs.Answer = model.Text;
             _context.Entry(askUs).State = EntityState.Modified;
             try {
                 await _context.SaveChangesAsync();

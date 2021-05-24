@@ -23,7 +23,7 @@ namespace ChatbotAPI.Models {
         public Answer Answer { get; set; }
 
         [Column("text")]
-        [StringLength(300)]
+        [StringLength(500)]
         public string Text { get; set; }
     }
 }
